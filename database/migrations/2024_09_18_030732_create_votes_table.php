@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('option_id')->constrained('options');
-            $table->string('ip_address')->nullable();
+            $table->foreignId('question_id')->constrained('questions');
+            $table->string('ip_address');
             $table->timestamps();
         });
     }
