@@ -1,49 +1,55 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Room Details') }}
+        <h2 class="font-semibold text-xl text-green-800 leading-tight">
+            {{ __('Detalhes da Sala') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-semibold mb-4">{{ $room->name }}</h3>
-                    <p><strong>Code:</strong> {{ $room->code }}</p>
-                    <p><strong>Created at:</strong> {{ $room->created_at->format('Y-m-d H:i:s') }}</p>
-
-                    <h4 class="text-md font-semibold mt-6 mb-2">Questions:</h4>
-                    @if($room->questions->isEmpty())
-                        <p>No questions added yet.</p>
-                    @else
-                        <ul>
-                            @foreach($room->questions as $question)
-                                <li class="mb-4">
-                                    <strong>{{ $question->question }}</strong>
-                                    @if($question->image)
-                                        <img src="{{ $question->image }}" alt="Question Image" class="mt-2 max-w-xs">
-                                    @endif
-                                    <ul class="ml-4 mt-2">
-                                        @foreach($question->options as $option)
-                                            <li>{{ $option->option }}</li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-
-                    <div class="mt-6">
-                        <a href="{{ route('rooms.add_question', $room->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Add Question
-                        </a>
-                        <a href="{{ route('rooms.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
-                            Back to Rooms
-                        </a>
-                    </div>
-                </div>
+    <div class="w-full py-6 mx-auto px-2">
+            <div class="flex justify-between items-center mb-4">
+            <div class="flex flex-col">
+              <a href="{{ route('rooms.index') }}" class="text-sm text-green-500 hover:text-green-800 font-medium">
+                  <i class="fas fa-arrow-left mr-2"></i>Voltar para salas
+              </a>
+                <h3 class="text-3xl font-bold mb-4 text-black">{{ $room->name }}</h3>
             </div>
-        </div>
+
+                  <button onclick="navigator.clipboard.writeText('{{ $room->code }}')" class="flex items-center text-green-500 font-bold py-2 px-4 rounded transition duration-300">
+                      <span class="text-xl mr-2">{{ $room->code }}</span>
+                      <i class="fas fa-copy"></i>
+                  </button>
+            </div>
+
+            <div class="flex flex-col bg-white shadow-lg p-4 rounded-lg gap-4">
+                <h4 class="text-xl w-full font-semibold text-green-500">Perguntas</h4>
+
+                @if($room->questions->isEmpty())
+                <p class="font-medium text-gray-500">Nenhuma pergunta adicionada ainda.</p>
+            @else
+                <ul class="space-y-6">
+                    @foreach($room->questions as $question)
+                        <li class="bg-green-100 p-4 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg hover:bg-green-200">
+                            <h5 class="text-xl font-bold text-green-800 mb-4">{{ $question->question }}</h5>
+                            @if($question->image)
+                                <img src="{{ $question->image }}" alt="Imagem da Pergunta" class="mt-4 max-w-full h-auto rounded-lg shadow-sm">
+                            @endif
+                            <ul class="mt-4 space-y-2">
+                                @foreach($question->options as $option)
+                                    <li class="bg-white p-3 rounded-md shadow-sm flex items-center">
+                                        <span class="w-6 h-6 flex items-center justify-center bg-green-500 text-white rounded-full mr-3 text-sm font-bold">{{ $loop->iteration }}</span>
+                                        <span class="text-gray-800">{{ $option->option }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+
+
+                <a href="{{ route('rooms.add_question', $room->id) }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-center">
+                    Adicionar pergunta
+                </a>
+            </div>
     </div>
 </x-app-layout>
