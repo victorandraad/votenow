@@ -1,25 +1,38 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
+    <form method="POST" action="{{ route('password.email') }}" class="mt-8 w-full">
         @csrf
 
-        <!-- Email Address -->
+        <p class="text-gray-500 my-12 text-center">
+            Esqueceu sua senha? Não se preocupe. Insira seu endereço de email e enviaremos um link para redefinir sua senha.
+        </p>
+
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+            <x-text-input
+                id="email"
+                placeholder="Insira seu email..."
+                class="block mt-1 w-full"
+                type="email"
+                name="email"
+                :value="old('email')"
+                required
+                autofocus
+                autocomplete="username"
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
+        <div class="flex flex-col items-end mt-6">
+            <x-primary-button class="mt-4 w-full text-lg">
+                {{ __('Redefinir senha') }}
             </x-primary-button>
+
+            <a
+                class="text-sm text-gray-600 hover:text-green-500 rounded-md focus:outline-none mt-1"
+                href="{{ route('login') }}"
+            >
+                {{ __('Lembrou sua senha?') }} <span class="text-green-500">{{ __('Entrar aqui.') }}</span>
+            </a>
         </div>
     </form>
 </x-guest-layout>

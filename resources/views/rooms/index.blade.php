@@ -1,44 +1,38 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Your Rooms') }}
-        </h2>
+        <h1 class="text-6xl font-extrabold text-center text-green-600 tracking-tight mb-4">
+            {{ __('Suas Salas') }}
+        </h1>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 bg-green-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <a href="{{ route('rooms.create') }}" class="btn btn-primary mb-3">Create New Room</a>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-8">
+                    <a href="{{ route('rooms.create') }}" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg mb-8 text-xl transition duration-300">
+                        Criar Nova Sala
+                    </a>
+                    
                     @if($rooms->isEmpty())
-                        <p>You don't have any rooms yet.</p>
+                        <p class="text-2xl text-center text-green-700">Você ainda não tem nenhuma sala.</p>
                     @else
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Code</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($rooms as $room)
-                                <tr>
-                                    <td>{{ $room->name }}</td>
-                                    <td>{{ $room->code }}</td>
-                                    <td>
-                                        <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-sm btn-info">View</a>
-                                        <a href="{{ route('rooms.add_question', $room->id) }}" class="btn btn-sm btn-success">Add Question</a>
-                                        <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" style="display:inline;">
+                        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                            @foreach($rooms as $room)
+                                <div class="bg-green-100 rounded-lg shadow-md p-6">
+                                    <h2 class="text-3xl font-bold text-green-800 mb-2">{{ $room->name }}</h2>
+                                    <p class="text-xl font-mono bg-green-200 px-3 py-1 rounded mb-4">{{ $room->code }}</p>
+                                    <div class="flex justify-between">
+                                        <a href="{{ route('rooms.show', $room->id) }}" class="btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Ver</a>
+                                        <a href="{{ route('rooms.add_question', $room->id) }}" class="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Adicionar Pergunta</a>
+                                        <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                            <button type="submit" class="btn bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="return confirm('Tem certeza?')">Excluir</button>
                                         </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     @endif
                 </div>
             </div>
