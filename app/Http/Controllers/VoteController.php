@@ -7,6 +7,8 @@ use App\Models\Question;
 use App\Models\Option;
 use App\Models\Vote;
 use Illuminate\Http\Request;
+use App\Events\VoteUpdated;
+use Illuminate\Support\Facades\Log;
 
 class VoteController extends Controller
 {
@@ -45,9 +47,9 @@ class VoteController extends Controller
                             ->where('ip_address', $ip_address)
                             ->exists();
 
-        if ($existingVote) {
-            return back()->with('error', 'You have already voted on this question.');
-        }
+        // if ($existingVote) {
+        //     return back()->with('error', 'You have already voted on this question.');
+        // }
 
         Vote::create([
             'option_id' => $request->option_id,
@@ -55,6 +57,6 @@ class VoteController extends Controller
             'ip_address' => $ip_address
         ]);
 
-        return back()->with('success', 'Your vote has been recorded.');
+        return redirect()->route('rooms.result', $question->room->code);
     }
 }

@@ -14,11 +14,41 @@
                 <h3 class="text-3xl font-bold mb-4 text-black">{{ $room->name }}</h3>
             </div>
 
-                  <button onclick="navigator.clipboard.writeText('{{ $room->code }}')" class="flex items-center text-green-500 font-bold py-2 px-4 rounded transition duration-300">
-                      <span class="text-xl mr-2">{{ $room->code }}</span>
-                      <i class="fas fa-copy"></i>
-                  </button>
+                <div class="flex items-center space-x-4">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(route('votes.room', ['code' => $room->code])) }}"
+                         alt="QR Code"
+                         class="w-12 h-12 cursor-pointer transition-all duration-300"
+                         onclick="showLargeQR(this.src)"
+                         title="Clique para ampliar">
+
+                    <button onclick="navigator.clipboard.writeText('{{ route('votes.room', ['code' => $room->code]) }}')" class="flex items-center text-green-500 font-bold py-2 px-4 rounded transition duration-300">
+                        <span class="text-xl mr-2">{{ $room->code }}</span>
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
             </div>
+
+            <!-- Modal para QR code ampliado -->
+            <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+                <div class="bg-white p-4 rounded-lg">
+                    <img id="largeQR" src="" alt="QR Code Ampliado" class="w-64 h-64">
+                </div>
+            </div>
+
+            <script>
+                function showLargeQR(src) {
+                    const modal = document.getElementById('qrModal');
+                    const largeQR = document.getElementById('largeQR');
+                    largeQR.src = src;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    
+                    modal.onclick = function() {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                    }
+                }
+            </script>
 
             <div class="flex flex-col bg-white shadow-lg p-4 rounded-lg gap-4">
                 <h4 class="text-xl w-full font-semibold text-green-500">Perguntas</h4>

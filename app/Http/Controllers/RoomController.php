@@ -26,6 +26,16 @@ class RoomController extends Controller
         return view('rooms.show', compact('room'));
     }
 
+    public function seeResult($code)
+    {
+        $room = Room::where('code', $code)->firstOrFail();
+        $questions = $room->questions()->with(['options' => function ($query) {
+            $query->withCount('votes');
+        }])->get();
+        
+        return view('rooms.result', compact('room', 'questions'));
+    }
+
     public function create()
     {
         return view('rooms.create');

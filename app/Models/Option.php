@@ -14,6 +14,12 @@ class Option extends Model
         return $this->belongsTo(Question::class);
     }
 
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
     protected $fillable = [
         'option',
         'votes',

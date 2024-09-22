@@ -39,4 +39,6 @@ Route::post('/vote/join', [VoteController::class, 'joinRoom'])->name('votes.join
 Route::get('/vote/{code}', [VoteController::class, 'showRoom'])->name('votes.room');
 Route::post('/vote/{question}', [VoteController::class, 'castVote'])->name('votes.cast');
 
+Route::get('/results/{code}', [RoomController::class, 'seeResult'])->name('rooms.result');
+
 require __DIR__.'/auth.php';
