@@ -1,1 +1,1 @@
-<img src="/logo.svg" alt="logo" {{ $attributes->merge(['class' => 'w-72']) }}>
+<a href="/dashboard"><img src="/logo.svg" alt="logo" {{ $attributes->merge(['class' => 'w-72']) }}></a>
