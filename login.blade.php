@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}" class="mt-8 w-full">
+    <form method="POST" action="{{ route('login') }}" class="mt-8 w-full max-w-xl">
         @csrf
 
         <div>
