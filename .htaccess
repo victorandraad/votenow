@@ -1,5 +1,14 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    # Redirecionar todas as requisições para a pasta public/
     RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ public/$1 [L]
+
+    # Caso o arquivo ou pasta existam, não redirecionar
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ public/index.php [L]
 </IfModule>
