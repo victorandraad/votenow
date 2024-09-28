@@ -13,7 +13,7 @@ function renderNavItem($route, $label, $icon)
 }
 @endphp
 
-<nav class="fixed md:sticky bottom-0 md:top-0 px-8 py-2 left-0 right-0 m-3 md:m-0 flex md:justify-between items-center md:rounded-none bg-white border border-gray-200 rounded-3xl shadow-xl shadow-black/15 md:shadow-none">
+<nav class="fixed md:sticky bottom-0 md:top-0 px-8 py-2 left-0 right-0 m-3 md:m-0 flex md:justify-between items-center md:rounded-none bg-white border border-gray-200 rounded-3xl shadow-xl shadow-black/15 md:shadow-none  {{ $theme === 'dark' ? 'bg-zinc-800 text-white' : 'bg-slate-200 text-black' }}">
     <x-application-logo class="hidden md:block w-44"></x-application-logo>
 
     <div class="max-w-7xl w-full md:w-auto mx-auto md:mx-0">
