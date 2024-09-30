@@ -18,7 +18,7 @@
 
 <body class="font-sans antialiased">
     @php
-    $theme = session('theme', 'light'); // Define o tema padrão como 'light'
+        $theme = session('theme', 'light'); // Define o tema padrão como 'light'
     @endphp
 
     <div id="page" class="min-h-screen bg-slate-200 flex flex-col">
@@ -27,8 +27,8 @@
         <!-- Page Heading -->
         <header class="flex justify-center pt-5">
             <x-application-logo class="mx-auto w-52 md:hidden" />
-            <button class="h-12 w-12 absolute right-7 rounded-full" onclick="mudarCor()">
-                <img src="https://www.freeiconspng.com/uploads/sun-icon-15.png" alt="" class="h-10 w-10 rounded-full">
+            <button id="themeButton" class="absolute h-10 w-10  md:h-12 md:w-12 max-md:top-16 right-6 rounded-full bg-white shadow-md shadow-gray-300" onclick="mudarCor()">
+                <img id="buttonIcon" src="https://static.thenounproject.com/png/4802375-200.png" alt="" class="">
             </button>
         </header>
 
@@ -39,45 +39,65 @@
     </div>
 
     <script>
-    function mudarCor() {
-        const page = document.getElementById('page');
-        const nav = document.querySelector('nav');
-        
-        // Trocar classes de fundo
-        page.classList.toggle('bg-slate-200'); // Tema claro
-        page.classList.toggle('bg-zinc-700'); // Tema escuro
+        function mudarCor() {
+            const page = document.getElementById('page');
+            const nav = document.querySelector('nav');
+            const button = document.getElementById('themeButton');
+            const buttonIcon = document.getElementById('buttonIcon');
 
-        // Trocar classes do componente de navegação
-        nav.classList.toggle('bg-slate-200'); // Tema claro
-        nav.classList.toggle('bg-zinc-800'); // Tema escuro
-        nav.classList.toggle('text-black'); // Tema claro
-        nav.classList.toggle('text-white'); // Tema escuro
+            // Trocar classes de fundo da página
+            page.classList.toggle('bg-slate-200'); // Tema claro
+            page.classList.toggle('bg-zinc-700'); // Tema escuro
 
-        // Salvar a preferência do usuário no localStorage
-        const isDark = page.classList.contains('bg-zinc-700');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
+            // Trocar classes de navegação
+            nav.classList.toggle('bg-slate-200'); // Tema claro
+            nav.classList.toggle('bg-zinc-800'); // Tema escuro
+            nav.classList.toggle('text-black'); // Tema claro
+            nav.classList.toggle('text-white'); // Tema escuro
 
-    window.onload = () => {
-        const theme = localStorage.getItem('theme');
-        const page = document.getElementById('page');
-        const nav = document.querySelector('nav');
+            // Alternar imagem e classes do botão
+            if (page.classList.contains('bg-zinc-700')) {
+                buttonIcon.src = "https://cdn-icons-png.flaticon.com/512/6714/6714978.png"; // Ícone para tema escuro
+                button.classList.add('bg-zinc-800', 'shadow-gray-900'); // Botão escuro
+                button.classList.remove('bg-white', 'shadow-gray-300'); // Remover tema claro do botão
+            } else {
+                buttonIcon.src = "https://static.thenounproject.com/png/4802375-200.png"; // Ícone para tema claro
+                button.classList.add('bg-white', 'shadow-gray-300'); // Botão claro
+                button.classList.remove('bg-zinc-800', 'shadow-gray-900'); // Remover tema escuro do botão
+            }
 
-        // Limpar classes de tema antes de aplicar
-        page.classList.remove('bg-slate-200', 'bg-zinc-700', 'text-black', 'text-white');
-        nav.classList.remove('bg-slate-200', 'bg-zinc-800', 'text-black', 'text-white');
-
-        // Aplicar classes baseadas na preferência
-        if (theme === 'dark') {
-            page.classList.add('bg-zinc-700', 'text-white');
-            nav.classList.add('bg-zinc-800', 'text-white');
-        } else {
-            page.classList.add('bg-slate-200', 'text-black');
-            nav.classList.add('bg-slate-200', 'text-black');
+            // Salvar a preferência do usuário no localStorage
+            const isDark = page.classList.contains('bg-zinc-700');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
-    };
-</script>
 
+        window.onload = () => {
+            const theme = localStorage.getItem('theme');
+            const page = document.getElementById('page');
+            const nav = document.querySelector('nav');
+            const button = document.getElementById('themeButton');
+            const buttonIcon = document.getElementById('buttonIcon');
 
+            // Limpar classes de tema antes de aplicar
+            page.classList.remove('bg-slate-200', 'bg-zinc-700', 'text-black', 'text-white');
+            nav.classList.remove('bg-slate-200', 'bg-zinc-800', 'text-black', 'text-white');
+
+            // Aplicar classes baseadas na preferência
+            if (theme === 'dark') {
+                page.classList.add('bg-zinc-700', 'text-white');
+                nav.classList.add('bg-zinc-800', 'text-white');
+                buttonIcon.src = "https://cdn-icons-png.flaticon.com/512/6714/6714978.png"; // Ícone para tema escuro
+                button.classList.add('bg-zinc-800', 'shadow-gray-900'); // Botão escuro
+                button.classList.remove('bg-white', 'shadow-gray-300'); // Remover tema claro do botão
+            } else {
+                page.classList.add('bg-slate-200', 'text-black');
+                nav.classList.add('bg-slate-200', 'text-black');
+                buttonIcon.src = "https://static.thenounproject.com/png/4802375-200.png"; 
+                button.classList.add('bg-white', 'shadow-gray-300'); // Botão claro
+                button.classList.remove('bg-zinc-800', 'shadow-gray-900'); // Remover tema escuro do botão
+            }
+        };
+
+    </script>
 
 </body>
