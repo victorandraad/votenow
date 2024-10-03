@@ -9,7 +9,7 @@
                 <x-primary-button class="mt-2 py-3">
                     {{ __('Entrar') }}
                 </x-primary-button>
-                <p class="text-sm mt-3 ">Não tem uma sala? <a href="{{ route('rooms.create') }}" class="text-green-500 underline"> Crie uma</a></p>
-        </form>        
+                <p class="text-sm mt-3">Não tem sala. <a href="{{ route('rooms.create') }}" class="text-green-500 underline">Crie aqui</a></p>
+        </form>
     </div>
 </x-guest-layout>
