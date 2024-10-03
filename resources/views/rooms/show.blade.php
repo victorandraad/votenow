@@ -1,85 +1,94 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-green-800 leading-tight">
-            {{ __('Detalhes da Sala') }}
-        </h2>
-    </x-slot>
+<x-guest-layout>
+    <div class="py-12 bg-green-50">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-8">
+                    <h1 class="text-7xl font-extrabold mb-6 text-center text-green-600 tracking-tight">
+                        {{ $room->name }}
+                    </h1>
+                    
+                    <div class="text-center mb-12">
+                        <p class="text-4xl font-bold text-green-500 mb-2">Código da sala:</p>
+                        <span id="room_code" class="text-5xl font-mono bg-green-100 px-4 py-2 rounded-lg shadow-inner">
+                            {{ $room->code }}
+                        </span>
+                    </div>
 
-    <div class="w-full py-6 mx-auto px-2">
-            <div class="flex justify-between items-center mb-4">
-            <div class="flex flex-col">
-              <a href="{{ route('rooms.index') }}" class="text-sm text-green-500 hover:text-green-800 font-medium">
-                  <i class="fas fa-arrow-left mr-2"></i>Voltar para salas
-              </a>
-                <h3 class="text-3xl font-bold mb-4 text-black">{{ $room->name }}</h3>
-            </div>
+                    <p class="text-center text-green-600 mb-12">
+                        Criada em: {{ $room->created_at->format('d/m/Y \à\s H:i') }}
+                    </p>
 
-                <div class="flex items-center space-x-4">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(route('votes.room', ['code' => $room->code])) }}"
-                         alt="QR Code"
-                         class="w-12 h-12 cursor-pointer transition-all duration-300"
-                         onclick="showLargeQR(this.src)"
-                         title="Clique para ampliar">
+                    <div id="questions-container">
+                        @foreach ($questions as $question)
+                            <div class="mb-16 bg-green-50 p-6 rounded-lg shadow-md">
+                                <h2 class="text-3xl font-semibold mb-6 text-green-800">{{ $question->question }}</h2>
+                                @if ($question->image)
+                                    <img src="{{ $question->image }}" alt="Imagem da Pergunta" class="mb-8 max-w-md mx-auto rounded-lg shadow-md">
+                                @endif
+                                <div class="space-y-4">
+                                    @foreach ($question->options as $option)
+                                        <label class="flex items-center p-4 bg-white rounded-lg shadow-sm hover:bg-green-100 transition cursor-pointer">
+                                            <input type="radio" class="form-radio text-green-600" name="question-{{ $question->id }}" value="{{ $option->id }}" required>
+                                            <span class="ml-3 text-green-700 text-lg">{{ $option->option }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
 
-                    <button onclick="navigator.clipboard.writeText('{{ route('votes.room', ['code' => $room->code]) }}')" class="flex items-center text-green-500 font-bold py-2 px-4 rounded transition duration-300">
-                        <span class="text-xl mr-2">{{ $room->code }}</span>
-                        <i class="fas fa-copy"></i>
+                    <button id="submit-all" class="mt-8 w-full bg-green-800 hover:bg-green-900 text-white font-bold py-4 px-6 rounded-lg transition duration-300 text-xl">
+                        Enviar Todos os Votos
                     </button>
                 </div>
             </div>
-
-            <!-- Modal para QR code ampliado -->
-            <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-                <div class="bg-white p-4 rounded-lg">
-                    <img id="largeQR" src="" alt="QR Code Ampliado" class="w-64 h-64">
-                </div>
-            </div>
-
-            <script>
-                function showLargeQR(src) {
-                    const modal = document.getElementById('qrModal');
-                    const largeQR = document.getElementById('largeQR');
-                    largeQR.src = src;
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    
-                    modal.onclick = function() {
-                        modal.classList.add('hidden');
-                        modal.classList.remove('flex');
-                    }
-                }
-            </script>
-
-            <div class="flex flex-col bg-white shadow-lg p-4 rounded-lg gap-4">
-                <h4 class="text-xl w-full font-semibold text-green-500">Perguntas</h4>
-
-                @if($room->questions->isEmpty())
-                <p class="font-medium text-gray-500">Nenhuma pergunta adicionada ainda.</p>
-            @else
-                <ul class="space-y-6">
-                    @foreach($room->questions as $question)
-                        <li class="bg-green-100 p-4 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg hover:bg-green-200">
-                            <h5 class="text-xl font-bold text-green-800 mb-4">{{ $question->question }}</h5>
-                            @if($question->image)
-                                <img src="{{ $question->image }}" alt="Imagem da Pergunta" class="mt-4 max-w-full h-auto rounded-lg shadow-sm">
-                            @endif
-                            <ul class="mt-4 space-y-2">
-                                @foreach($question->options as $option)
-                                    <li class="bg-white p-3 rounded-md shadow-sm flex items-center">
-                                        <span class="w-6 h-6 flex items-center justify-center bg-green-500 text-white rounded-full mr-3 text-sm font-bold">{{ $loop->iteration }}</span>
-                                        <span class="text-gray-800">{{ $option->option }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-
-
-                <a href="{{ route('rooms.add_question', $room->id) }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-center">
-                    Adicionar pergunta
-                </a>
-            </div>
+        </div>
     </div>
-</x-app-layout>
+
+    <script>
+        var room_code = document.querySelector("#room_code").textContent.trim()
+
+        document.getElementById('submit-all').addEventListener('click', function() {
+            const votesArray = [];
+            const questions = document.querySelectorAll('#questions-container > div');
+
+            questions.forEach(question => {
+                const questionId = question.querySelector('input[type="radio"]').name.split('-')[1];
+                const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                if (selectedOption) {
+                    votesArray.push({
+                        questionId: questionId,
+                        optionId: selectedOption.value
+                    });
+                }
+            });
+
+            if (votesArray.length === 0) {
+                alert("Você não selecionou nenhuma opção.");
+                return;
+            }
+
+            // Envia os dados armazenados
+            votesArray.forEach(vote => {
+                fetch(`{{ route('votes.cast', '') }}/${vote.questionId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ option_id: vote.optionId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+
+            window.location.href = "/results/" + room_code
+        });
+    </script>
+</x-guest-layout>
