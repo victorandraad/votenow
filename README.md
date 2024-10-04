@@ -46,28 +46,12 @@
     npm install
     ```
 
-5. Configure o arquivo de ambiente `.env`. Faça uma cópia do arquivo `.env.example`:
-    ```bash
-    cp .env.example .env
-    ```
-
-6. Configure o banco de dados no arquivo `.env`, certificando-se de que o SQLite está configurado corretamente. Para utilizar o SQLite, no arquivo `.env`:
-    ```plaintext
-    DB_CONNECTION=sqlite
-    DB_DATABASE=/caminho/para/database.sqlite
-    ```
-
-    Você também pode criar o arquivo `database.sqlite` no diretório `database` do projeto:
-    ```bash
-    touch database/database.sqlite
-    ```
-
-7. Execute as migrações do banco de dados:
+5. Execute as migrações do banco de dados:
     ```bash
     php artisan migrate
     ```
 
-8. Para rodar o servidor e compilar os arquivos de estilo, execute um dos seguintes comandos:
+6. Para rodar o servidor e compilar os arquivos de estilo, execute um dos seguintes comandos:
     ```bash
     npm run build
     ```
