@@ -1,66 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VoteNow
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**VoteNow** é uma aplicação para realizar votações de forma simples e prática. Com esta aplicação, os usuários podem criar e participar de enquetes em tempo real, votando em suas opções preferidas e visualizando os resultados instantaneamente.
 
-## About Laravel
+## Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Criação de enquetes com várias opções de escolha
+- Participação de usuários em votações de forma simples e rápida
+- Exibição de resultados em tempo real
+- Interface amigável e fácil de usar
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tecnologias Utilizadas
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP**: Backend da aplicação.
+- **Laravel**: Framework utilizado para gerenciar a lógica do servidor.
+- **SQLite**: Banco de dados para armazenar as votações e resultados.
+- **HTML/CSS/JavaScript/Blade**: Frontend para a interação com os usuários.
 
-## Learning Laravel
+## Requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8.2 ou superior
+- Composer
+- SQLite
+- Node.js (para gerenciamento de pacotes do frontend)
+- Laravel (versão 8.x ou superior)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Instalação
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Clone este repositório:
+    ```bash
+    git clone https://github.com/victorandraad/votenow.git
+    ```
 
-## Laravel Sponsors
+2. Navegue até o diretório do projeto:
+    ```bash
+    cd votenow
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. Instale as dependências do PHP usando o Composer:
+    ```bash
+    composer install
+    ```
 
-### Premium Partners
+4. Instale as dependências do Node.js:
+    ```bash
+    npm install
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. Configure o arquivo de ambiente `.env`. Faça uma cópia do arquivo `.env.example`:
+    ```bash
+    cp .env.example .env
+    ```
 
-## Contributing
+6. Configure o banco de dados no arquivo `.env`, certificando-se de que o SQLite está configurado corretamente. Para utilizar o SQLite, no arquivo `.env`:
+    ```plaintext
+    DB_CONNECTION=sqlite
+    DB_DATABASE=/caminho/para/database.sqlite
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Você também pode criar o arquivo `database.sqlite` no diretório `database` do projeto:
+    ```bash
+    touch database/database.sqlite
+    ```
 
-## Code of Conduct
+7. Execute as migrações do banco de dados:
+    ```bash
+    php artisan migrate
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+8. Para rodar o servidor e compilar os arquivos de estilo, execute um dos seguintes comandos:
+    ```bash
+    npm run build
+    ```
+    ou, para desenvolvimento:
+    ```bash
+    npm run dev
+    ```
 
-## Security Vulnerabilities
+Agora, você pode acessar a aplicação no seu navegador em `http://localhost:8000`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Contribuições
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
