@@ -8,14 +8,14 @@
     <div class="w-full py-6 mx-auto px-2">
         <div class="flex justify-between items-center mb-4">
             <div class="flex flex-col">
-                <a href="{{ route('rooms.show', $room->id) }}" class="text-sm text-green-500 hover:text-green-800 font-medium">
+                <a href="{{ route('rooms.show', $room->code) }}" class="text-sm text-green-500 hover:text-green-800 font-medium">
                     <i class="fas fa-arrow-left mr-2"></i>Voltar para detalhes da sala
                 </a>
                 <h3 class="text-3xl font-bold mb-4 text-black">Adicionar pergunta</h3>
             </div>
         </div>
 
-        <form action="{{ route('rooms.store_question', $room->id) }}" method="POST">
+        <form action="{{ route('rooms.store_question', $room->code) }}" method="POST">
             @csrf
             <div class="mb-4">
                 <x-input-label for="question" :value="__('Pergunta:')" />

@@ -18,7 +18,6 @@ function renderNavItem($route, $label, $icon)
 
     <div class="max-w-7xl w-full md:w-auto mx-auto md:mx-0">
         <div class="flex justify-evenly h-16 md:gap-4">
-            {!! renderNavItem('dashboard', 'Dashboard', 'fas fa-home') !!}
             {!! renderNavItem('rooms.index', 'Minhas Salas', 'fas fa-building') !!}
             {!! renderNavItem('rooms.create', 'Criar Sala', 'fas fa-plus') !!}
             {!! renderNavItem('profile', 'Perfil', 'fas fa-user') !!}

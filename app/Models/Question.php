@@ -23,4 +23,9 @@ class Question extends Model
     {
         return $this->hasMany(Option::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }

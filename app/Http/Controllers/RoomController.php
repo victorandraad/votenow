@@ -7,12 +7,14 @@ use App\Models\Question;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate; // Add this line at the top of your class
 
 class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = auth()->user()->rooms;
+        $rooms = Auth::user()->rooms;
         return view('rooms.index', compact('rooms'));
     }
 
@@ -32,7 +34,6 @@ class RoomController extends Controller
         $questions = $room->questions()->with(['options' => function ($query) {
             $query->withCount('votes');
         }])->get();
-        
         return view('rooms.result', compact('room', 'questions'));
     }
 
@@ -47,26 +48,29 @@ class RoomController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $room = auth()->user()->rooms()->create([
+        $room = Auth::user()->rooms()->create([
             'name' => $request->name,
             'code' => Str::random(6),
         ]);
 
-        return redirect()->route('rooms.show', $room)->with('success', 'Room created successfully');
+        return redirect()->route('rooms.add_question', $room->code)->with('success', 'Room created successfully');
     }
 
-    public function show(Room $room)
+    public function show($room_code)
     {
+        $room = Room::where('code', $room_code)->firstOrFail();
         return view('rooms.show', compact('room'));
     }
 
-    public function addQuestionForm(Room $room)
+    public function addQuestionForm($room_code)
     {
+        $room = Room::where('code', $room_code)->firstOrFail();
         return view('rooms.add_question', compact('room'));
     }
 
-    public function addQuestion(Request $request, Room $room)
+    public function addQuestion(Request $request, $room_code)
     {
+        $room = Room::where('code', $room_code)->firstOrFail();
         $validatedData = $request->validate([
             'question' => 'required|string|max:255',
             'image' => 'nullable|url',
@@ -85,27 +89,44 @@ class RoomController extends Controller
             ]);
         }
 
-        return redirect()->route('rooms.show', $room)->with('success', 'Question added successfully');
+        return redirect()->route('rooms.show', $room->code)->with('success', 'Question added successfully');
     }
 
-    public function deleteRoom(Room $room)
+    public function deleteRoom($room_code)
     {
-        $this->authorize('delete', $room);
+        $room = Room::where('code', $room_code)->firstOrFail();
+        if (Gate::denies('delete', $room)) {
+            abort(403); // Handle unauthorized access
+        }
+
+        $questions = $room->questions;
+        foreach ($questions as $question) {
+            $question->options()->delete();
+            $question->votes()->delete();
+            $question->delete();
+        }
         $room->delete();
+
         return redirect()->route('rooms.index')->with('success', 'Room deleted successfully');
     }
 
-    public function deleteQuestion(Question $question)
+    public function deleteQuestion($question_id)
     {
-        $this->authorize('delete', $question->room);
+        $question = Question::findOrFail($question_id);
+        if (Gate::denies('delete', $question->room)) {
+            abort(403); // Handle unauthorized access
+        }
         $room = $question->room;
         $question->delete();
-        return redirect()->route('rooms.show', $room)->with('success', 'Question deleted successfully');
+        return redirect()->route('rooms.show', $room->code)->with('success', 'Question deleted successfully');
     }
 
-    public function deleteOption(Option $option)
+    public function deleteOption($option_id)
     {
-        $this->authorize('delete', $option->question->room);
+        $option = Option::findOrFail($option_id);
+        if (Gate::denies('delete', $option->question->room)) {
+            abort(403); // Handle unauthorized access
+        }
         $question = $option->question;
         $option->delete();
         return redirect()->route('rooms.show', $question->room)->with('success', 'Option deleted successfully');

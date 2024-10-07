@@ -1,5 +1,6 @@
 <x-guest-layout>
     <div class="grow flex flex-col justify-center items-center">
+        <x-application-logo class="mb-10" />
         <h2 class="text-3xl font-bold mb-10">Entrar na Sala</h2>
         <form method="POST" action="{{ route('votes.join') }}">
             @csrf

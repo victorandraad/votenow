@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="py-12 bg-green-50">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8">
@@ -19,7 +19,7 @@
                     </p>
 
                     <div id="questions-container">
-                        @foreach ($questions as $question)
+                        @foreach ($room->questions as $question)
                             <div class="mb-16 bg-green-50 p-6 rounded-lg shadow-md">
                                 <h2 class="text-3xl font-semibold mb-6 text-green-800">{{ $question->question }}</h2>
                                 @if ($question->image)
