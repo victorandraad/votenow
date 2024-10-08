@@ -16,9 +16,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="flex flex-col justify-center w-full">
+<body class="flex flex-col justify-center w-full items-center">
 
-    <div class="flex flex-col justify-center w-full">
+    <div class="flex justify-center w-full">
         <x-application-logo class="mt-10 self-center" />
     </div>
 

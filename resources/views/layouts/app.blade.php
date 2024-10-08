@@ -27,9 +27,7 @@
         <!-- Page Heading -->
         <header class="flex justify-center pt-5">
             <x-application-logo class="mx-auto w-52 md:hidden" />
-            <button id="themeButton" class="absolute h-10 w-10  md:h-12 md:w-12 max-md:top-16 right-6 rounded-full bg-white shadow-md shadow-gray-300" onclick="mudarCor()">
-                <img id="buttonIcon" src="https://static.thenounproject.com/png/4802375-200.png" alt="" class="">
-            </button>
+            <x-dark-mode/>
         </header>
 
         <!-- Page Content -->
