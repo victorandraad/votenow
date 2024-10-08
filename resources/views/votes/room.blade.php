@@ -1,22 +1,24 @@
 <x-guest-layout>
-    <div class="py-12 bg-green-50">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-2xl sm:rounded-lg">
                 <div class="p-8">
+                    <p class="text-center text-green-600 mb-12">
+                        Criada em: {{ $room->created_at->format('d/m/Y \à\s H:i') }}
+                    </p>
+
                     <h1 class="text-7xl font-extrabold mb-6 text-center text-green-600 tracking-tight">
                         {{ $room->name }}
                     </h1>
-                    
-                    <div class="text-center mb-12">
+
+                    <div class="text-center mb-12 flex flex-col lg:w-2/6 mx-auto">
                         <p class="text-4xl font-bold text-green-500 mb-2">Código da sala:</p>
                         <span class="text-5xl font-mono bg-green-100 px-4 py-2 rounded-lg shadow-inner">
                             {{ $room->code }}
                         </span>
                     </div>
 
-                    <p class="text-center text-green-600 mb-12">
-                        Criada em: {{ $room->created_at->format('d/m/Y \à\s H:i') }}
-                    </p>
+                    
 
                     @foreach ($questions as $question)
                         <div class="mb-16 bg-green-50 p-6 rounded-lg shadow-md">
