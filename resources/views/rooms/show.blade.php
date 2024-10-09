@@ -50,7 +50,7 @@
                 }
             </script>
 
-            <div class="flex flex-col bg-white shadow-lg p-4 rounded-lg gap-4">
+            <div class="flex flex-col shadow-lg p-4 rounded-lg gap-4">
                 <h4 class="text-xl w-full font-semibold text-green-500">Perguntas</h4>
 
                 @if($room->questions->isEmpty())

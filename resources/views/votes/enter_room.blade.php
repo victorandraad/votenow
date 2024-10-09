@@ -20,12 +20,15 @@
         const page = document.body;
         const button = document.getElementById('themeButton');
         const buttonIcon = document.getElementById('buttonIcon');
+        const caixaTexto = document.getElementById('caixaTexto');
 
         // Alternar classes de fundo da página
         page.classList.toggle('bg-slate-200'); // Tema claro
         page.classList.toggle('bg-zinc-700'); // Tema escuro
         page.classList.toggle('text-black'); // Texto claro
         page.classList.toggle('text-white'); // Texto escuro
+
+        caixaTexto.classList.toggle('bg-transparent')
 
         // Alternar imagem e classes do botão
         if (page.classList.contains('bg-zinc-700')) {
@@ -58,11 +61,13 @@
             buttonIcon.src = "https://cdn-icons-png.flaticon.com/512/6714/6714978.png"; // Ícone para tema escuro
             button.classList.add('bg-zinc-800', 'shadow-gray-900'); // Botão escuro
             button.classList.remove('bg-white', 'shadow-gray-300'); // Remover tema claro do botão
+            caixaTexto.classList.add('bg-transparent')
         } else {
             page.classList.add('bg-slate-200', 'text-black');
             buttonIcon.src = "https://static.thenounproject.com/png/4802375-200.png"; 
             button.classList.add('bg-white', 'shadow-gray-300'); // Botão claro
             button.classList.remove('bg-zinc-800', 'shadow-gray-900'); // Remover tema escuro do botão
+            caixaTexto.classList.remove('bg-transparent')
         }
     };
     </script>

@@ -1,5 +1,6 @@
 <x-guest-layout>
     <div class="py-12">
+        <x-dark-mode class="right-2"/>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-2xl sm:rounded-lg">
                 <div class="p-8">
@@ -46,4 +47,57 @@
             </div>
         </div>
     </div>
+
+    <script>
+    function mudarCor() {
+        const page = document.body;
+        const buttonIcon = document.getElementById('buttonIcon');
+        const button = document.getElementById('themeButton');
+
+        // Alternar classes do tema da página
+        page.classList.toggle('bg-slate-200'); // Claro
+        page.classList.toggle('bg-zinc-700'); // Escuro
+        page.classList.toggle('text-black'); // Claro
+        page.classList.toggle('text-white'); // Escuro
+
+        // Alterar o ícone e estilo do botão
+        if (page.classList.contains('bg-zinc-700')) {
+            buttonIcon.src = "https://cdn-icons-png.flaticon.com/512/6714/6714978.png"; // Ícone escuro
+            button.classList.add('bg-zinc-800', 'shadow-gray-900'); // Botão escuro
+            button.classList.remove('bg-white', 'shadow-gray-300'); // Remover tema claro do botão
+        } else {
+            buttonIcon.src = "https://static.thenounproject.com/png/4802375-200.png"; // Ícone claro
+            button.classList.add('bg-white', 'shadow-gray-300'); // Botão claro
+            button.classList.remove('bg-zinc-800', 'shadow-gray-900'); // Remover tema escuro do botão
+        }
+
+        // Salvar a preferência do tema no localStorage
+        const isDark = page.classList.contains('bg-zinc-700');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    // Carregar o tema salvo no localStorage quando a página for carregada
+    window.onload = () => {
+        const theme = localStorage.getItem('theme');
+        const page = document.getElementById('page');
+        const buttonIcon = document.getElementById('buttonIcon');
+        const button = document.getElementById('themeButton');
+
+        if (theme === 'dark') {
+            page.classList.add('bg-zinc-700', 'text-white');
+            page.classList.remove('bg-slate-200', 'text-black');
+            buttonIcon.src = "https://cdn-icons-png.flaticon.com/512/6714/6714978.png"; // Ícone escuro
+            button.classList.add('bg-zinc-800', 'shadow-gray-900');
+            button.classList.remove('bg-white', 'shadow-gray-300');
+        } else {
+            page.classList.add('bg-slate-200', 'text-black');
+            page.classList.remove('bg-zinc-700', 'text-white');
+            buttonIcon.src = "https://static.thenounproject.com/png/4802375-200.png"; // Ícone claro
+            button.classList.add('bg-white', 'shadow-gray-300');
+            button.classList.remove('bg-zinc-800', 'shadow-gray-900');
+        }
+    }
+</script>
+
+
 </x-guest-layout>
