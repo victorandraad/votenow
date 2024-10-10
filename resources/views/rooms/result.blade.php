@@ -6,10 +6,10 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 rounded-lg">
+        <div class="max-w-screen mx-auto sm:px-6 lg:px-8 rounded-lg">
             <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h3 class="text-2xl font-bold mb-6 text-black">Código da Sala	: {{ $room->code }}</h3>
+                    <h3 class="text-2xl font-bold mb-6">Código da Sala	: {{ $room->code }}</h3>
                     
                     @foreach ($questions as $question)
                         <div class="mb-10 p-6 bg-gray-50 rounded-xl shadow-md">

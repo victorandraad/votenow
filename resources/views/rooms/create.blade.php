@@ -7,7 +7,7 @@
 
         <form action="{{ route('rooms.store') }}" method="POST" class="w-full max-w-md">
             @csrf
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-700">Nome da Sala</label>
+            <label for="name" id="labelName" class="block mb-2 text-sm font-medium text-gray-700">Nome da Sala</label>
             <x-text-input id="name" name="name" type="text" class="w-full mb-4" placeholder="Insira o nome da sala..." required />
 
             <x-primary-button class="w-full py-3">

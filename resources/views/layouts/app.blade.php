@@ -42,16 +42,24 @@
             const nav = document.querySelector('nav');
             const button = document.getElementById('themeButton');
             const buttonIcon = document.getElementById('buttonIcon');
+            const labelName = document.getElementById('labelName');
+            const caixaTexto = document.getElementById('caixaTexto');
 
             // Trocar classes de fundo da página
             page.classList.toggle('bg-slate-200'); // Tema claro
             page.classList.toggle('bg-zinc-700'); // Tema escuro
+            page.classList.toggle('text-black'); // Tema claro
+
 
             // Trocar classes de navegação
             nav.classList.toggle('bg-slate-200'); // Tema claro
             nav.classList.toggle('bg-zinc-800'); // Tema escuro
             nav.classList.toggle('text-black'); // Tema claro
             nav.classList.toggle('text-white'); // Tema escuro
+
+            labelName.classList.toggle('text-gray-300');
+
+            caixaTexto.classList.toggle('bg-transparent')
 
             // Alternar imagem e classes do botão
             if (page.classList.contains('bg-zinc-700')) {
@@ -75,6 +83,8 @@
             const nav = document.querySelector('nav');
             const button = document.getElementById('themeButton');
             const buttonIcon = document.getElementById('buttonIcon');
+            const labelName = document.getElementById('labelName');
+            const caixaTexto = document.getElementById('caixaTexto');
 
             // Limpar classes de tema antes de aplicar
             page.classList.remove('bg-slate-200', 'bg-zinc-700', 'text-black', 'text-white');
@@ -87,12 +97,16 @@
                 buttonIcon.src = "https://cdn-icons-png.flaticon.com/512/6714/6714978.png"; // Ícone para tema escuro
                 button.classList.add('bg-zinc-800', 'shadow-gray-900'); // Botão escuro
                 button.classList.remove('bg-white', 'shadow-gray-300'); // Remover tema claro do botão
+                labelName.classList.add('text-gray-300');
+                caixaTexto.classList.add('bg-transparent')
             } else {
                 page.classList.add('bg-slate-200', 'text-black');
                 nav.classList.add('bg-slate-200', 'text-black');
                 buttonIcon.src = "https://static.thenounproject.com/png/4802375-200.png"; 
                 button.classList.add('bg-white', 'shadow-gray-300'); // Botão claro
                 button.classList.remove('bg-zinc-800', 'shadow-gray-900'); // Remover tema escuro do botão
+                labelName.classList.remove('text-gray-300')
+                caixaTexto.classList.remove('bg-transparent')
             }
         };
 
