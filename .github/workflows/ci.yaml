@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy to production
-        uses: easingthemes/ssh-deploy@main
+        uses: easingthemes/ssh-deploy@v0.4.0  # Updated to a specific version
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: '-rltgoDzvO --delete'
