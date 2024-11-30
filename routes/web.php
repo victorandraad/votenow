@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\ChatBotController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [VoteController::class, 'enterRoom']);
@@ -38,5 +39,7 @@ Route::get('/vote/{code}', [VoteController::class, 'showRoom'])->name('votes.roo
 Route::post('/vote/{question}', [VoteController::class, 'castVote'])->name('votes.cast');
 
 Route::get('/results/{code}', [RoomController::class, 'seeResult'])->name('rooms.result');
+
+Route::get('/chatbot', [ChatBotController::class, 'sendQuestion']);
 
 require __DIR__.'/auth.php';
