@@ -14,7 +14,7 @@
     >
         <div class="flex flex-col h-full">
             <div class="flex justify-between items-center bg-green-600 text-white p-4">
-                <h2 class="text-lg font-semibold">Chatbot</h2>
+                <h2 class="text-lg font-semibold">Jorge</h2>
                 <button onclick="closeChat()" class="text-white">&times;</button>
             </div>
             <div class="flex-1 p-4 overflow-y-auto" id="chatMessages">
@@ -54,6 +54,12 @@
             }, 500);
         }
 
+        function scrollToBottom() {
+        const messages = document.getElementById('chatMessages');
+        messages.scrollTop = messages.scrollHeight;
+        }
+
+
         function closeChat() {
             const chatContainer = document.getElementById('chatContainer');
             const chatModal = document.getElementById('chatModal');
@@ -89,6 +95,8 @@
             userMessage.textContent = input.value;
             messages.appendChild(userMessage);
 
+            scrollToBottom();
+
             // Envia a mensagem para o backend
             const response = await fetch('/api/chat', {
                 method: 'POST',
@@ -106,6 +114,8 @@
             botMessage.className = 'self-start bg-gray-700 text-black p-2 rounded-lg max-w-xs mb-3';
             botMessage.textContent = data.reply;
             messages.appendChild(botMessage);
+
+            scrollToBottom();
 
             input.value = '';
             messages.scrollTop = messages.scrollHeight;
