@@ -31,8 +31,9 @@
         </header>
 
         <!-- Page Content -->
-        <main class="flex-1 pt-5 px-4 mb-16 flex flex-col">
+        <main class="flex-1 pt-5 px-4 mb-16 flex flex-col max-md:items-center">
             {{ $slot }}
+            <x-chat-button />
         </main>
     </div>
 
