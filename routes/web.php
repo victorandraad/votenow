@@ -40,6 +40,6 @@ Route::post('/vote/{question}', [VoteController::class, 'castVote'])->name('vote
 
 Route::get('/results/{code}', [RoomController::class, 'seeResult'])->name('rooms.result');
 
-Route::get('/chatbot', [ChatBotController::class, 'sendQuestion']);
+Route::get('/chatbot', [ChatBotController::class, 'sendQuestion'])->name('chatbot');
 
 require __DIR__.'/auth.php';

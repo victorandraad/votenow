@@ -38,16 +38,16 @@
             const chatModal = document.getElementById('chatModal');
             const chatIcon = document.getElementById('chatIcon');
 
-            
+
             chatContainer.style.width = '40%';
             chatContainer.style.height = '50%';
             chatContainer.style.borderRadius = '12px';
             chatContainer.style.backgroundColor = '#ffffff';
 
-            
+
             chatIcon.style.opacity = '0';
 
-            
+
             setTimeout(() => {
                 chatModal.classList.remove('hidden');
                 chatContainer.classList.add('hidden');
@@ -88,37 +88,65 @@
             event.preventDefault();
             const input = document.getElementById('chatInput');
             const messages = document.getElementById('chatMessages');
+            const submitButton = event.target.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
 
+            // Desabilita o input e botão enquanto processa
+            input.disabled = true;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
 
             const userMessage = document.createElement('div');
-            userMessage.className = 'self-end bg-gray-700 text-white p-2 rounded-lg max-w-xs mb-3';
+            userMessage.className = 'float-right bg-green-600 text-white p-2 rounded-lg max-w-xs mb-3 items-end clear-both';
             userMessage.textContent = input.value;
             messages.appendChild(userMessage);
 
+            // Indicador de digitação com cor mais suave
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'float-left bg-gray-100 p-2 rounded-lg max-w-xs mb-3 clear-both';
+            typingIndicator.innerHTML = `
+                <div class="typing-animation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            messages.appendChild(typingIndicator);
             scrollToBottom();
 
-            // Envia a mensagem para o backend
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ message: input.value })
-            });
+            try {
+                const response = await axios.get("/chatbot", {
+                    params: {
+                        question: input.value
+                    }
+                });
 
-            const data = await response.json();
+                typingIndicator.remove();
 
-            // Adiciona a resposta do backend
-            const botMessage = document.createElement('div');
-            botMessage.className = 'self-start bg-gray-700 text-black p-2 rounded-lg max-w-xs mb-3';
-            botMessage.textContent = data.reply;
-            messages.appendChild(botMessage);
+                const botMessage = document.createElement('div');
+                botMessage.className = 'float-left bg-gray-200 text-gray-800 p-2 rounded-lg max-w-xs mb-3 clear-both';
+                botMessage.textContent = response.data.response;
+                messages.appendChild(botMessage);
 
-            scrollToBottom();
-
-            input.value = '';
-            messages.scrollTop = messages.scrollHeight;
+                input.value = '';
+                scrollToBottom();
+            } catch (error) {
+                typingIndicator.remove();
+                
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'float-left bg-red-100 text-red-600 p-2 rounded-lg max-w-xs mb-3 clear-both';
+                errorMessage.textContent = 'Desculpe, ocorreu um erro ao processar sua mensagem.';
+                messages.appendChild(errorMessage);
+                console.error('Error:', error);
+            } finally {
+                // Reabilita o input e botão
+                input.disabled = false;
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+                input.focus();
+            }
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </div>
